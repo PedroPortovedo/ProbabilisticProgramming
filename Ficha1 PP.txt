@@ -1,0 +1,228 @@
+Ficha 1
+
+1)
+
+~~~~
+//1.1)
+var make_coin = function(prob) {
+  return function() {
+    return flip(prob)
+  }
+}
+var moeda =  make_coin(0.5)
+
+
+var n = 2
+
+
+var toss = function(n){
+     repeat(n,moeda)
+    }
+  
+var Nheads = function bouncer(arr) {
+  return (arr.filter(Boolean)).length;
+}
+
+
+var toss_res = toss(n)
+
+console.log(toss_res)
+console.log("Saiu",Nheads(toss_res), "vez(es) cara." )
+
+//1.2
+if (Nheads(toss_res) == 0){
+  console.log("Deu todo Coroa")
+}
+
+//1.3
+if ( (Nheads(toss_res)!= 0) &&(Nheads(toss_res)!= n) ){
+  console.log("Os resultados foram diferentes.")
+}
+~~~~
+
+2)
+
+~~~~
+var make_coin = function(prob) {
+  return function() {
+    return flip(prob)
+  }
+}
+var moeda =  make_coin(0.5)
+
+
+var n = 10000
+
+
+var toss = function(n,coin){
+     repeat(n,coin)
+    }
+
+var toss_res = toss(n,moeda)
+
+viz.hist(toss_res)
+~~~~
+
+3)
+
+~~~~
+//A função anterior já pode receber valores diferentes de probabilidades
+
+var chance = 0.3
+
+var riggedCoin = make_coin(chance)
+
+var riggedToss = toss(n,riggedCoin)
+
+viz.hist(riggedToss)
+~~~~
+
+4)
+
+~~~~
+//Variáveis
+var prob = 0.5
+var n = 10000
+
+
+var make_coin = function(prob) {
+  return function() {
+    return flip(prob)
+  }
+}
+
+
+var coin_smith = function(prob) {
+   return ( ( (repeat(5,make_coin(prob))).filter(Boolean) ).length)
+}
+
+var toss_handfull = function(n) {
+  return repeat(n,coin_smith)
+}
+
+var toss_handfull_res = toss_handfull(n)
+
+
+viz.hist(toss_handfull_res)
+~~~~
+
+5)
+
+~~~~
+//Variáveis
+
+var n = 10000
+
+
+var dice = function() {
+  return randomInteger(6) + 1
+}
+
+var roll_dice = function(n){
+  return repeat(n,dice)
+}
+
+var roll_dice_res = roll_dice(n)
+
+viz.hist(roll_dice_res)
+~~~~
+
+6)
+
+~~~~
+//Variáveis
+
+//Opção 1) Dados lançados como array
+
+var n = 100
+var ndice = 2
+
+var dice = function() {
+  return randomInteger(6) + 1
+}
+
+var alotOfDice = function() {
+  return repeat(ndice ,dice)
+}
+
+var roll_alot = function(n){
+  return repeat(n,alotOfDice)
+}
+
+var roll_alot_res = roll_alot(n)
+
+viz.hist(roll_alot_res)
+
+
+//Opcão 2) Dados Somados
+
+var sumDice = function(){
+  return sum (repeat(ndice,dice) )
+}
+
+var roll_sum = function(n){
+  return repeat(n,sumDice)
+}
+
+var roll_sum_res = roll_sum(n)
+
+viz.hist(roll_sum_res)
+~~~~
+
+7)
+
+~~~~
+//Variáveis
+
+var ranks = ["A","2","3","4","5","6","7","8","9","10","Q","J","K"]
+var suits = ["D","H","C","S"]
+
+
+var card = function(){
+  var r1 = ranks[Math.floor(Math.random()*ranks.length)]
+  var s1 = suits[Math.floor(Math.random()*suits.length)]
+  return r1+s1
+  //return r1
+}
+
+var draw = card()
+console.log (draw)
+~~~~
+
+8)
+
+~~~~
+//Variáveis
+
+var ranks = ["A","2","3","4","5","6","7","8","9","10","Q","J","K"]
+var suits = ["D","H","C","S"]
+var n = 5
+
+
+var card = function(){
+  var r1 = ranks[Math.floor(Math.random()*ranks.length)]
+  var s1 = suits[Math.floor(Math.random()*suits.length)]
+  return r1+s1
+  //return r1
+}
+
+var hand = function(h,n){
+  if (n > (ranks.length*suits.length)){
+    console.log('Número de cartas maior do que o Baralho')
+    return null
+  }
+  if (n == 0){
+    return h
+  }
+  var drew = card()
+  if (any(function(x){x==drew},h)) {
+    return hand(h,n)
+  } 
+  else {
+    return hand(h.concat(drew),n-1)
+  }
+}
+
+var starting_hand = hand([],n)
+console.log('A mão é: ', starting_hand)
+~~~~
